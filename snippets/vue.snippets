@@ -1,0 +1,76 @@
+snippet blah "see if this is working"
+    "blah"${0}
+
+snippet bread "Add breadcrumb using Inertia Links"
+        <ol class="breadcrumb">
+            <li><Link ${1}href="${2}">${3}</Link></li>
+            <li><Link ${4}href="${5}">${6}</Link></li>
+            <li class="active">${0}</li>
+        </ol>
+
+snippet input "Add bootstrap text input with label"
+    <div class="form-group">
+        <label for="${1}">${2}</label>
+        <input
+            type="text"
+            class="form-control"
+            id="${1}"
+            name="${3}"
+            v-model="${4}"
+            placeholder="${5}"
+        />
+        <span class="text-danger" v-if="${6:form.errors.}${7}">{{ ${6}${7} }}</span>
+    </div>${0}
+
+snippet select "Add bootstrap select input with label"
+    <div class="form-group">
+        <label for="${1}">${2}</label>
+        <select
+            class="form-control"
+            id="${1}"
+            name="${4}"
+            v-model="${5}"
+        >
+            <option v-for="${6} in ${7}" :key="${6}.${8}" :value="${6}.${9}">
+                {{ ${6}.${10} }}
+            </option>
+            <span class="text-danger" v-if="${11:form.errors.}${12}">{{ ${11}${12} }}</span>
+        </select>
+    </div>
+
+snippet row "bootstrap 3 row and col-sm-12"
+    <div class="row">
+        <div class="col-sm-12">
+            ${0}
+        </div>
+    </div>
+
+snippet vuec "vue component boilerplate"
+    <template>
+        ${1}
+    </template>
+    <script setup>
+    ${0}
+    </script>
+
+snippet table "bootstrap 3 html table"
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>${1}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="${2}" :key="${3}" :dusk="\`${4}\`">
+                <td>${0}</td>
+            </tr>
+        </tbody>
+    </table>
+
+snippet panel "bootstrap 3 panel component"
+    <div class="panel panel-${1:default}">
+        <div class="panel-heading">${2}</div>
+        <div class="panel-body">
+            ${0}
+        </div>
+    </div>

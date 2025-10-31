@@ -1,0 +1,47 @@
+snippet fork "add foreign key"
+    \$table->foreign(${1})->references('id')->on(${2})${0}
+
+snippet browse "add dusk browser callback"
+    \$this->browse(function (Browser \$browser) {
+        \$browser->${0}
+    });
+
+snippet cb "add callback function"
+    function (${1}) ${2}{
+        ${3:return} ${0}
+    });
+
+snippet cba "add callback arrow function"
+    fn (${1}) => ${0})
+
+snippet tear "add phpunit teardown method"
+    protected function tearDown(): void
+    {
+        ${0}
+
+        parent::tearDown();
+    }
+
+snippet setup "add phpunit setUp method"
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        ${0}
+    }
+
+snippet pause "add dusk pause statement"
+    ->pause(999999)${0}
+
+snippet caseuom "add eloquent query for unit of measure CASE"
+    \$caseUom = UnitOfMeasure::where('short_code', 'CASE')->first();
+
+snippet eachuom "add eloquent query for unit of measure EACH"
+    \$eachUom = UnitOfMeasure::where('short_code', 'EACH')->first();
+
+snippet validclo "add laravel form request validation closure"
+    function (string \$attribute, mixed \$value, Closure \$fail) {
+        if (${1}) {
+            \$fail(${0});
+        }
+    },
