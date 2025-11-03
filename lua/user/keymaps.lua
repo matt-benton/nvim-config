@@ -53,18 +53,58 @@ end)
 
 -- Import database
 vim.keymap.set('n', '<Leader>dbi', function ()
-  local backup_dir = vim.fn.expand('~/Dumps/sprout')
-  local files = vim.fn.glob(backup_dir .. '/*.sql', false, true)
+  local dumps_dir = vim.fn.expand('~/Dumps')
 
-  vim.ui.select(files, {
-    prompt = 'Select SQL file to import:',
-  }, function (choice)
-      if choice then
-        local full_path = backup_dir .. '/' .. choice
-        local db_name = vim.fn.input('Database name: ')
-        if db_name ~= '' then
-          vim.cmd('terminal mysql -u root -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' < ' .. choice)
+  -- get subdirectories in the dumps folder
+  local subdirs = vim.fn.glob(dumps_dir .. '/*', false, true)
+
+  -- extract directory names for display
+  local dir_names = {}
+  for _, path in ipairs(subdirs) do
+    if vim.fn.isdirectory(path) == 1 then
+      local name = vim.fn.fnamemodify(path, ':t')
+      table.insert(dir_names, name)
+    end
+  end
+
+  if #dir_names == 0 then
+    print('No subdirectories found in dumps folder')
+    return
+  end
+
+  -- select the subdirectory
+  vim.ui.select(dir_names, {
+    prompt = 'Select project directory:',
+  }, function (project)
+    if not project then return end
+
+    local backup_dir = dumps_dir .. '/' .. project .. '/'
+    local files = vim.fn.glob(backup_dir .. '*.{sql,dump}', false, true)
+
+    -- extract just filenames for display
+    local file_names = {}
+    for _, file in ipairs(files) do
+      local name = vim.fn.fnamemodify(file, ':t')
+      table.insert(file_names, name)
+    end
+
+    if #file_names == 0 then
+      print('No .sql or .dump files found in ' .. backup_dir)
+      return
+    end
+
+    -- select the sql file
+    vim.ui.select(file_names, {
+      prompt = 'Select file to import:',
+    }, function (choice)
+        if choice then
+          local full_path = backup_dir .. '/' .. choice
+          local db_name = vim.fn.input('Database name: ')
+          if db_name ~= '' then
+            -- FIXME: add options for username, address, and port
+            vim.cmd('terminal mysql -u root -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' < ' .. full_path)
+          end
         end
-      end
+    end)
   end)
 end)
