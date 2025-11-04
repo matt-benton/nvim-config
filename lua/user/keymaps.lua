@@ -99,10 +99,13 @@ vim.keymap.set('n', '<Leader>dbi', function ()
     }, function (choice)
         if choice then
           local full_path = backup_dir .. '/' .. choice
-          local db_name = vim.fn.input('Database name: ')
-          if db_name ~= '' then
-            -- FIXME: add options for username, address, and port
-            vim.cmd('terminal mysql -u root -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' < ' .. full_path)
+          local db_database = vim.fn.input('Database name: ')
+          local db_username = vim.fn.input('Database username: ', 'root')
+          local host = vim.fn.input('MySQL host: ', '127.0.0.1')
+          local port = vim.fn.input('MySQL port: ', '3306')
+
+          if db_database ~= '' then
+            vim.cmd('terminal mysql -u ' .. db_username .. ' -h ' .. host .. ' -P ' .. port .. ' -p ' .. db_database .. ' < ' .. full_path)
           end
         end
     end)
