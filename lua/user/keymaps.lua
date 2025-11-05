@@ -34,20 +34,42 @@ vim.keymap.set('n', '<Leader>f', ':!./vendor/bin/pint --dirty<CR>')
 vim.keymap.set('n', '<Leader>fjs', ':!npx prettier . --write<CR>')
 
 -- Dump database
-vim.keymap.set('n', '<Leader>ddb', function ()
-  local username = vim.fn.input('Username: ', 'root')
-  local db_name = vim.fn.input('Database name: ')
-  vim.cmd('!mysqldump -u ' .. username .. ' -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' > ~/Dumps/' .. db_name .. '.sql')
-end)
-
--- Dump database
 vim.keymap.set('n', '<Leader>dbd', function ()
-  local username = vim.ui.input({
-    prompt = 'Username: ',
-    default = 'root'
-  }, function (username)
-    local db_name = vim.fn.input('Database name: ')
-    vim.cmd('!mysqldump -u ' .. username .. ' -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' > ~/Dumps/' .. db_name .. '.sql')
+  local dumps_dir = vim.fn.expand('~/Dumps')
+
+  -- get subdirectories in the dumps folder
+  local subdirs = vim.fn.glob(dumps_dir .. '/*', false, true)
+
+  -- extract directory names for display
+  local dir_names = {}
+  for _, path in ipairs(subdirs) do
+    if vim.fn.isdirectory(path) == 1 then
+      local name = vim.fn.fnamemodify(path, ':t')
+      table.insert(dir_names, name)
+    end
+  end
+
+  if #dir_names == 0 then
+    print('No subdirectories found in dumps folder')
+    return
+  end
+
+  -- select the subdirectory
+  vim.ui.select(dir_names, {
+    prompt = 'Select project directory:',
+  }, function (project)
+    if not project then return end
+
+    local backup_dir = dumps_dir .. '/' .. project .. '/'
+    local files = vim.fn.glob(backup_dir .. '*.{sql,dump}', false, true)
+
+    local username = vim.ui.input({
+      prompt = 'Username: ',
+      default = 'root'
+    }, function (username)
+      local db_name = vim.fn.input('Database name: ')
+      vim.cmd('!mysqldump -u ' .. username .. ' -h 127.0.0.1 -P 3306 -p ' .. db_name .. ' > ' .. backup_dir .. db_name .. '.sql')
+    end)
   end)
 end)
 
