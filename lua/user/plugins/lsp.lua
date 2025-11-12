@@ -25,7 +25,7 @@ return {
 				-- 	}
 				-- }
 				automatic_installation = false,
-				ensure_installed = { 'vue_ls', 'intelphense' },
+				ensure_installed = { 'vue_ls', 'intelphense', 'lua-language-server' },
 	})
 
 	local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -80,6 +80,8 @@ lspconfig.vue_ls.setup({
   capabilities = capabilities,
   filetypes = { "vue" },
 })
+
+vim.lsp.enable('lua_ls')
 
       -- Keymaps
       vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
