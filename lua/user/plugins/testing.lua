@@ -1,19 +1,19 @@
 return {
-  {
-    'vim-test/vim-test',
-    config = function()
-      vim.keymap.set('n', '<Leader>tn', ':TestNearest<CR>')
-      vim.keymap.set('n', '<Leader>tf', ':TestFile<CR>')
-      vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>')
-      vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>')
-      vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>')
+    {
+        "vim-test/vim-test",
+        config = function()
+            vim.keymap.set("n", "<Leader>tn", ":TestNearest<CR>")
+            vim.keymap.set("n", "<Leader>tf", ":TestFile<CR>")
+            vim.keymap.set("n", "<Leader>ts", ":TestSuite<CR>")
+            vim.keymap.set("n", "<Leader>tl", ":TestLast<CR>")
+            vim.keymap.set("n", "<Leader>tv", ":TestVisit<CR>")
 
-      -- vim-test runs php tests with the --colors option
-      -- which causes a warning to show when the 
-      vim.cmd([[
+            -- vim-test runs php tests with the --colors option
+            -- which causes a warning to show when the
+            vim.cmd([[
 	      let test#php#phpunit#executable = 'php artisan test'
 	      let test#strategy = "basic"
       ]])
-    end,
-  }
+        end,
+    },
 }

@@ -1,5 +1,5 @@
-require('nvim-treesitter.configs').setup({
-    ensure_installed = 'all',
+require("nvim-treesitter.configs").setup({
+    ensure_installed = "all",
     highlight = {
         enable = true,
     },
@@ -15,12 +15,12 @@ require('nvim-treesitter.configs').setup({
             enable = true,
             lookahead = true,
             keymaps = {
-                ['if'] = '@function.inner',
-                ['af'] = '@function.outer',
-                ['ia'] = '@parameter.inner',
-                ['aa'] = '@parameter.outer',
-                ['il'] = '@loop.inner',
-                ['al'] = '@loop.outer',
+                ["if"] = "@function.inner",
+                ["af"] = "@function.outer",
+                ["ia"] = "@parameter.inner",
+                ["aa"] = "@parameter.outer",
+                ["il"] = "@loop.inner",
+                ["al"] = "@loop.outer",
             },
         },
     },
