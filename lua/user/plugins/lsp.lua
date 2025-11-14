@@ -19,7 +19,13 @@ return {
                 -- 	}
                 -- }
                 automatic_installation = false,
-                ensure_installed = { "vue_ls", "intelphense", "lua-language-server", "stylua" },
+                ensure_installed = {
+                    "vue_ls",
+                    "intelphense",
+                    "lua-language-server",
+                    "stylua",
+                    "typescript-language-server",
+                },
             })
 
             local capabilities =
@@ -29,52 +35,18 @@ return {
             -- require('lspconfig').intelephense.setup({ capabilities = capabilities }) -- deprecated
             vim.lsp.enable("intelephense", { capabilities = capabilities })
 
-            -- Vue, JavaScript, TypeScript
-            local util = require("lspconfig.util") -- deprecated
-            -- local util = vim.lsp.config.util
-
-            -- Find the typescript server for the project or fallback to the global ts install
-            local function get_typescript_server_path(root_dir)
-                local global_ts = "/opt/homebrew/lib/node_modules/typescript/lib"
-                -- Alternative location if installed as root:
-                -- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
-                local found_ts = ""
-                local function check_dir(path)
-                    found_ts = util.path.join(path, "node_modules", "typescript", "lib")
-                    if util.path.exists(found_ts) then
-                        return path
-                    end
-                end
-                if util.search_ancestors(root_dir, check_dir) then
-                    return found_ts
-                else
-                    return global_ts
-                end
-            end
+            -- typescript (needed for vue)
+            vim.lsp.enable("ts_ls")
 
             local lspconfig = require("lspconfig") -- deprecated
-            -- local lspconfig = vim.lsp.config
 
-            -- lspconfig.ts_ls.setup {
-            --   -- on_attach = on_attach,
-            --   capabilities = capabilities,
-            --   init_options = {
-            --     plugins = {
-            --       {
-            --         name = "@vue/typescript-plugin", -- this needs to be installed globally for this to work
-            -- 	      location = "/opt/homebrew/lib/@vue/language-server",
-            --         languages = { "vue" },
-            --       },
-            --     },
-            --   },
-            --   filetypes = { "typescript", "javascript", "vue" },
-            -- }
-
+            -- vue
             lspconfig.vue_ls.setup({
                 capabilities = capabilities,
                 filetypes = { "vue" },
             })
 
+            -- lua
             vim.lsp.enable("lua_ls")
 
             -- Keymaps
