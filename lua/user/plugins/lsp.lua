@@ -32,19 +32,16 @@ return {
                 require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
             -- PHP
-            -- require('lspconfig').intelephense.setup({ capabilities = capabilities }) -- deprecated
             vim.lsp.enable("intelephense", { capabilities = capabilities })
 
             -- typescript (needed for vue)
             vim.lsp.enable("ts_ls")
 
-            local lspconfig = require("lspconfig") -- deprecated
-
             -- vue
-            lspconfig.vue_ls.setup({
-                capabilities = capabilities,
-                filetypes = { "vue" },
-            })
+            -- lspconfig.vue_ls.setup({
+            --     capabilities = capabilities,
+            --     filetypes = { "vue" },
+            -- })
 
             -- lua
             vim.lsp.enable("lua_ls")
