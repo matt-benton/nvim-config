@@ -63,23 +63,31 @@ vim.keymap.set("n", "<Leader>dbd", function()
         end
 
         local backup_dir = dumps_dir .. "/" .. project .. "/"
-        local files = vim.fn.glob(backup_dir .. "*.{sql,dump}", false, true)
 
-        local username = vim.ui.input({
+        vim.ui.input({
             prompt = "Username: ",
             default = "root",
         }, function(username)
-            local db_name = vim.fn.input("Database name: ")
-            vim.cmd(
-                "!mysqldump -u "
-                    .. username
-                    .. " -h 127.0.0.1 -P 3306 -p "
-                    .. db_name
-                    .. " > "
-                    .. backup_dir
-                    .. db_name
-                    .. ".sql"
-            )
+            vim.ui.input({
+                prompt = "Database name: ",
+            }, function(db_name)
+                local date = os.date("%Y-%m-%d")
+                vim.ui.input({
+                    prompt = "Dump filename: ",
+                    default = db_name .. "_" .. date,
+                }, function(filename)
+                    vim.cmd(
+                        "!mysqldump -u "
+                            .. username
+                            .. " -h 127.0.0.1 -P 3306 -p "
+                            .. db_name
+                            .. " > "
+                            .. backup_dir
+                            .. filename
+                            .. ".sql"
+                    )
+                end)
+            end)
         end)
     end)
 end)
@@ -189,7 +197,7 @@ vim.keymap.set("n", "<Leader>dss", function()
             prompt = "Select screenshot:",
         }, function(choice)
             if choice then
-                os.execute("open " .. screenshots_dir .. "/" .. choice)
+                vim.ui.open(screenshots_dir .. "/" .. choice)
             end
         end)
     end
