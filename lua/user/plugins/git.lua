@@ -16,4 +16,8 @@ return {
             vim.keymap.set("n", "<Leader>dc", ":DiffviewClose<CR>")
         end,
     },
+    {
+        "esmuellert/vscode-diff.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+    },
 }
