@@ -157,3 +157,40 @@ vim.keymap.set("n", "<Leader>dbi", function()
         end)
     end)
 end)
+
+-- open up laravel dusk screenshot
+vim.keymap.set("n", "<Leader>dss", function()
+    local project_dir = vim.fn.getcwd()
+    print(project_dir .. " project directory")
+
+    -- check to see if project_dir has a tests/Browser/screenshots
+    local screenshots_dir = project_dir .. "/tests/Browser/screenshots"
+    if vim.fn.isdirectory(screenshots_dir) == 0 then
+        print("Screenshots not found")
+        return
+    end
+
+    -- get file names from screenshots_dir and
+    -- put them into a table
+    local files = vim.fn.glob(screenshots_dir .. "/*", false, true)
+
+    local file_names = {}
+    for _, file in ipairs(files) do
+        local name = vim.fn.fnamemodify(file, ":t")
+        table.insert(file_names, name)
+    end
+
+    if #file_names == 0 then
+        print("No screenshot files found in " .. screenshots_dir)
+    elseif #file_names == 1 then
+        os.execute("open " .. screenshots_dir .. "/" .. file_names[1])
+    else
+        vim.ui.select(file_names, {
+            prompt = "Select screenshot:",
+        }, function(choice)
+            if choice then
+                os.execute("open " .. screenshots_dir .. "/" .. choice)
+            end
+        end)
+    end
+end)
