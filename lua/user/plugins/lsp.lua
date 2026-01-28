@@ -24,7 +24,7 @@ return {
                     "intelephense",
                     "lua_ls",
                     "stylua",
-                    "ts_ls",
+                    "vtsls",
                 },
             })
 
@@ -34,14 +34,37 @@ return {
             -- PHP
             vim.lsp.enable("intelephense", { capabilities = capabilities })
 
-            -- typescript (needed for vue)
-            vim.lsp.enable("ts_ls")
+            -- Vue (hybrid mode) + TypeScript
+            -- `vue_ls` requires a TS LSP client attached to the same buffer.
+            -- The recommended setup is `vtsls` + `@vue/typescript-plugin`.
+            local vue_language_server_path = vim.fn.stdpath("data")
+                .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 
-            -- vue
-            -- lspconfig.vue_ls.setup({
-            --     capabilities = capabilities,
-            --     filetypes = { "vue" },
-            -- })
+            local vue_plugin = {
+                name = "@vue/typescript-plugin",
+                location = vue_language_server_path,
+                languages = { "vue" },
+                configNamespace = "typescript",
+            }
+
+            vim.lsp.config("vtsls", {
+                capabilities = capabilities,
+                settings = {
+                    vtsls = {
+                        tsserver = {
+                            globalPlugins = { vue_plugin },
+                        },
+                    },
+                },
+                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            })
+
+            vim.lsp.config("vue_ls", {
+                capabilities = capabilities,
+            })
+
+            vim.lsp.enable("vtsls")
+            vim.lsp.enable("vue_ls")
 
             -- lua
             vim.lsp.enable("lua_ls")
