@@ -15,7 +15,7 @@ return {
                     file_ignore_patterns = {
                         ".git/",
                         ".node_modules",
-                        ".vendor",
+                        "^vendor/",
                         "public/build",
                     },
                     preview = {
