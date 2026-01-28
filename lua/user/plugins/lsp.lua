@@ -67,6 +67,22 @@ return {
             vim.lsp.enable("vue_ls")
 
             -- lua
+            vim.lsp.config("lua_ls", {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" },
+                        },
+                        workspace = {
+                            checkThirdParty = false,
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    },
+                },
+            })
             vim.lsp.enable("lua_ls")
 
             -- Keymaps
