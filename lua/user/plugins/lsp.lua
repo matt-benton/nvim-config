@@ -21,10 +21,10 @@ return {
                 automatic_installation = false,
                 ensure_installed = {
                     "vue_ls",
-                    "intelphense",
-                    "lua-language-server",
+                    "intelephense",
+                    "lua_ls",
                     "stylua",
-                    "typescript-language-server",
+                    "ts_ls",
                 },
             })
 
