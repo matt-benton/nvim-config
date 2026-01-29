@@ -18,8 +18,9 @@ snippet input "Add bootstrap text input with label"
             name="${3}"
             v-model="${4}"
             placeholder="${5}"
+            ${6:autocomplete="off"}
         />
-        <span class="text-danger" v-if="${6:form.errors.}${7}">{{ ${6}${7} }}</span>
+        <span class="text-danger" v-if="${7:form.errors.}${8}">{{ ${7}${8} }}</span>
     </div>${0}
 
 snippet select "Add bootstrap select input with label"
