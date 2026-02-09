@@ -29,6 +29,10 @@ vim.keymap.set("n", "<C-k>", ":move .-2<CR>==")
 vim.keymap.set("v", "<C-j>", ":move '>+1<CR>gv=gv")
 vim.keymap.set("v", "<C-k>", ":move '<-2<CR>gv=gv")
 
+-- Resize split
+vim.keymap.set("n", "<M-Left>", ":vertical resize +2<CR>")
+vim.keymap.set("n", "<M-Right>", ":vertical resize -2<CR>")
+
 -- Format files
 vim.keymap.set("n", "<Leader>f", ":!./vendor/bin/pint --dirty<CR>")
 vim.keymap.set("n", "<Leader>fjs", ":!npx prettier . --write<CR>")
