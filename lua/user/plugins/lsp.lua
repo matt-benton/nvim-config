@@ -25,6 +25,7 @@ return {
                     "lua_ls",
                     "stylua",
                     "vtsls",
+                    "tailwindcss",
                 },
             })
 
@@ -65,6 +66,9 @@ return {
 
             vim.lsp.enable("vtsls")
             vim.lsp.enable("vue_ls")
+
+            -- tailwind
+            vim.lsp.enable("tailwindcss")
 
             -- lua
             vim.lsp.config("lua_ls", {
