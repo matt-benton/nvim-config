@@ -26,6 +26,7 @@ return {
                     "stylua",
                     "vtsls",
                     "tailwindcss",
+                    "laravel_ls",
                 },
             })
 
@@ -34,6 +35,9 @@ return {
 
             -- PHP
             vim.lsp.enable("intelephense", { capabilities = capabilities })
+
+            -- Laravel
+            vim.lsp.enable("laravel_ls")
 
             -- Vue (hybrid mode) + TypeScript
             -- `vue_ls` requires a TS LSP client attached to the same buffer.
