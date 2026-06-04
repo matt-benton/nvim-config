@@ -27,6 +27,7 @@ return {
                     "xml",
                     "yaml",
                 },
+                -- needed for comments to work in vue sfc
                 highlight = {
                     enable = true,
                 },
