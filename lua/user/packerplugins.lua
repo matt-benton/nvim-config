@@ -49,29 +49,18 @@ require("packer").startup(function(use)
     })
 
     -- github color scheme
-    -- use({
-    --   'projekt0n/github-nvim-theme',
-    --   config = function()
-    --     require('github-theme').setup({
-    --       -- ...
-    --     })
-
-    --     vim.cmd('colorscheme github_dark')
-    --   end
-    -- })
-
     use({
-        "fneu/breezy",
+        "rebelot/kanagawa.nvim",
         config = function()
-            vim.cmd("colorscheme breezy") -- change the color scheme
-            vim.cmd("hi! LineNr guibg=none") -- change the background of line numbers
-            vim.cmd("highlight SignColumn guibg=none") -- change the background of the margin to the left of line numbers
+            require("kanagawa").setup({
+                theme = "dragon",
+                background = {
+                    dark = "dragon",
+                    light = "lotus",
+                },
+            })
 
-            vim.cmd("highlight TabLine guibg=none") -- change background color of inactive tabs
-            -- vim.cmd('highlight TabLineSel guibg=none') -- change color for actice tabs
-            vim.cmd("highlight TabLineFill guibg=none") -- change color of rest of tabline
-
-            vim.cmd("highlight VertSplit guibg=none") -- change the background color of splits
+            vim.cmd("colorscheme kanagawa-dragon")
         end,
     })
 
